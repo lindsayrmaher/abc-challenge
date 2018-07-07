@@ -7,9 +7,9 @@ const User = require('./user')
 User.hasMany(Collection)
 
 Collection.belongsTo(User)
-Collection.belongsToMany(Character, { through: CharacterCollection })
+Collection.belongsToMany(Character, { through: 'CharacterCollection' })
 
-Character.belongsToMany(Collection, { through: CharacterCollection })
+Character.belongsToMany(Collection, { through: 'CharacterCollection' })
 
 // Export models
 module.exports = { Character, Collection, User }

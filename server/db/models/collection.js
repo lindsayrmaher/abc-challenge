@@ -10,3 +10,5 @@ const Collection = db.define('collection', {
     type: Sequelize.TEXT
   }
 })
+
+module.exports = Collection
