@@ -3,12 +3,18 @@
   "version": "1.0.0",
   "description": "An app for tracking characters in books, TV and film",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/k-vosswinkel/plot-lines-take-2"
+  },
   "dependencies": {
     "sequelize": "^4.38.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "webpack": "^4.15.1"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV='test' mocha ./server/**/*.spec.js ./server/**/**/*.spec.js ./client/**/*.spec.js --compilers js:babel-register"
   },
   "author": "",
   "license": "ISC"
