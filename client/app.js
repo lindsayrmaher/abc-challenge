@@ -10,7 +10,6 @@ class App extends Component {
   }
 
   render() {
-    console.log('OUR STATE: ', this.props.state)
     return (
       <div className="App">
         <div>App has mounted!</div>
