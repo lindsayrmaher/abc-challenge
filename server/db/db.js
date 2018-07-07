@@ -9,6 +9,3 @@ const db = new Sequelize(process.env.DATABASE_URL || `postgres://localhost:5432/
 
 // Don't forget to export it!
 module.exports = db
-
-
-// MOVED ALL OF THIS TO INDEX
