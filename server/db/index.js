@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
+require('./models')
 
 // Grab the database name from package.json and automatically append '-test' if in a testing env.
 const databaseName = pkg.name + (process.env.NODE_ENV === 'test' ? '-test' : '')
