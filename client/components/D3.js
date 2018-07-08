@@ -13,7 +13,7 @@ class D3Graph extends Component {
     //  center: { lat: this.props.lat, lng: this.props.lng }
     //  zoom: 8
     // })
-    let ourAnimals = [
+    let nodes = [
       { id: "mammal", group: 0, label: "Mammals", level: 1 },
       { id: "dog", group: 0, label: "Dogs", level: 2 },
       { id: "cat", group: 0, label: "Cats", level: 2 },
@@ -27,7 +27,7 @@ class D3Graph extends Component {
       { id: "pike", group: 2, label: "Pikes", level: 2 }
     ]
 
-    let ourLinks = [
+    let links = [
       { target: "mammal", source: "dog", strength: 0.7 },
       { target: "mammal", source: "cat", strength: 0.7 },
       { target: "mammal", source: "fox", strength: 0.7 },
@@ -62,20 +62,32 @@ class D3Graph extends Component {
     }
 
     const nodeElements = svg.append('g')
-      // .selectAll('circle')
-      // .data(nodes)
-      // .enter().append('circle')
-      //   .attr('r', 10)
-      //   .attr('fill', getNodeColor)
+      .selectAll(this.refs.circle)
+      .data(nodes)
+      .enter().append('circle')
+        .attr('refs', 'circle')
+        .attr('r', 10)
+        .attr('fill', getNodeColor)
 
-    // const textElements = svg.append('g')
-    //   .selectAll('text')
-    //   .data(nodes)
-    //   .enter().append('text')
-    //     .text(node => node.label)
-    //     .attr('font-size', 15)
-    //     .attr('dx', 15)
-    //     .attr('dy', 4)
+    const textElements = svg.append('g')
+      .selectAll(this.refs.text)
+      .data(nodes)
+      .enter().append('text')
+        .text(node => node.label)
+        .attr('refs', 'text')
+        .attr('font-size', 15)
+        .attr('dx', 15)
+        .attr('dy', 4)
+
+    simulation.nodes(nodes).on('tick', () => {
+      nodeElements
+        .attr('cx', node => node.x - 150)
+        .attr('cy', node => node.y - 150)
+      textElements
+        .attr('x', node => node.x - 150)
+        .attr('y', node => node.y - 150)
+    })
+
   }
 
   shouldComponentUpdate() {
