@@ -216,7 +216,7 @@ var D3Graph = function (_Component) {
   }
 
   _createClass(D3Graph, [{
-    key: 'componentDidMount',
+    key: "componentDidMount",
     value: function componentDidMount() {
       // In a given example, here's where you instantiate your Google Map
       // IMPORTANT: this.refs.d3 is how we would reference our dummy div below
@@ -224,34 +224,61 @@ var D3Graph = function (_Component) {
       //  center: { lat: this.props.lat, lng: this.props.lng }
       //  zoom: 8
       // })
+      var nodes = [{ id: "mammal", group: 0, label: "Mammals", level: 1 }, { id: "dog", group: 0, label: "Dogs", level: 2 }, { id: "cat", group: 0, label: "Cats", level: 2 }, { id: "fox", group: 0, label: "Foxes", level: 2 }, { id: "elk", group: 0, label: "Elk", level: 2 }, { id: "insect", group: 1, label: "Insects", level: 1 }, { id: "ant", group: 1, label: "Ants", level: 2 }, { id: "bee", group: 1, label: "Bees", level: 2 }, { id: "fish", group: 2, label: "Fish", level: 1 }, { id: "carp", group: 2, label: "Carp", level: 2 }, { id: "pike", group: 2, label: "Pikes", level: 2 }];
+
+      var links = [{ target: "mammal", source: "dog", strength: 0.7 }, { target: "mammal", source: "cat", strength: 0.7 }, { target: "mammal", source: "fox", strength: 0.7 }, { target: "mammal", source: "elk", strength: 0.7 }, { target: "insect", source: "ant", strength: 0.7 }, { target: "insect", source: "bee", strength: 0.7 }, { target: "fish", source: "carp", strength: 0.7 }, { target: "fish", source: "pike", strength: 0.7 }, { target: "cat", source: "elk", strength: 0.1 }, { target: "carp", source: "ant", strength: 0.1 }, { target: "elk", source: "bee", strength: 0.1 }, { target: "dog", source: "cat", strength: 0.1 }, { target: "fox", source: "ant", strength: 0.1 }, { target: "pike", source: "dog", strength: 0.1 }];
 
       var width = window.innerWidth;
       var height = window.innerHeight;
-      var svg = d3.select(this.refs.d3).append('svg').attr('width', 500).attr('height', '500px');
+      var svg = d3.select(this.refs.d3).append('svg').attr('refs', 'svg').attr('width', 500).attr('height', '500px');
 
+      // Not sure if this is working or not
       var simulation = d3.forceSimulation().force('charge', d3.forceManyBody().strength(-20)).force('center', d3.forceCenter(width / 2, height / 2));
+
+      var getNodeColor = function getNodeColor(node) {
+        return node.level === 1 ? 'red' : 'gray';
+      };
+
+      var nodeElements = svg.append('g').selectAll(this.refs.circle).data(nodes).enter().append('circle').attr('refs', 'circle').attr('r', 10).attr('fill', getNodeColor);
+
+      var textElements = svg.append('g').selectAll(this.refs.text).data(nodes).enter().append('text').text(function (node) {
+        return node.label;
+      }).attr('refs', 'text').attr('font-size', 15).attr('dx', 15).attr('dy', 4);
+
+      simulation.nodes(nodes).on('tick', function () {
+        nodeElements.attr('cx', function (node) {
+          return node.x - 150;
+        }).attr('cy', function (node) {
+          return node.y - 150;
+        });
+        textElements.attr('x', function (node) {
+          return node.x - 150;
+        }).attr('y', function (node) {
+          return node.y - 150;
+        });
+      });
     }
   }, {
-    key: 'shouldComponentUpdate',
+    key: "shouldComponentUpdate",
     value: function shouldComponentUpdate() {
       return false;
     }
   }, {
-    key: 'componentWillReceiveProps',
+    key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
       // Apply whatever changes you would like given new props here
       // this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng })
     }
   }, {
-    key: 'render',
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { id: 'd3', ref: 'd3' },
+        "div",
+        { id: "d3", ref: "d3" },
         _react2.default.createElement(
-          'div',
+          "div",
           null,
-          'Well helloooo there'
+          "Well helloooo there"
         )
       );
     }
