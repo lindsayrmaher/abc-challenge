@@ -47,6 +47,7 @@ class D3Graph extends Component {
     // Setting the variable height/width of the SVG element
     const width = window.innerWidth
     const height = window.innerHeight
+    let neighbors = [];
 
     // Create SVG element and add attributes
     const svg = d3.select(this.refs.d3)
@@ -61,7 +62,10 @@ class D3Graph extends Component {
       .force('center', d3.forceCenter(width / 2, height / 2))
 
     // Generate node colors
-    const getNodeColor = (node) => {
+    function getNodeColor(node, neighbors) {
+      if (neighbors.length > 0 && neighbors.indexOf(node.id)) {
+        return node.level === 1 ? 'blue' : 'green'
+      }
       return node.level === 1 ? 'red' : 'gray'
     }
 
@@ -117,7 +121,63 @@ class D3Graph extends Component {
     // What is the difference between this and line 104? Why can't I combine them?
     simulation.force('link').links(links)
 
+    // Adding drag-and-drop interactivity
+    const dragDrop = d3.drag()
+      .on('start', node => {
+        node.fx = node.x
+        node.fy = node.y
+      })
+      .on('drag', node => {
+        simulation.alphaTarget(0.7).restart()
+        node.fx = d3.event.x
+        node.fy = d3.event.y
+      })
+      .on('end', node => {
+        if (!d3.event.active) {
+          simulation.alphaTarget(0)
+        }
+        node.fx = null
+        node.fy = null
+      })
 
+    // Remember to not only create the events, but then CALL them!
+    nodeElements.call(dragDrop)
+
+    // Highlighting nodes and links based on relationships
+    function getNeighbors(node) {
+      return links.reduce((neighbors, link) => {
+        if (link.target.id === node.id) {
+          neighbors.push(link.source.id)
+        } else if (link.source.id === node.id) {
+          neighbors.push(link.target.id)
+        }
+        return neighbors
+      }, [node.id])
+    }
+
+    function isNeighborLink(node, link) {
+      return link.target.id === node.id || link.source.id === node.id
+    }
+
+    function getTextColor(node, neighbors) {
+      return neighbors.indexOf(node.id) ? 'green' : 'black'
+    }
+
+    function getLinkColor(node, link) {
+      return isNeighborLink(node, link) ? 'green' : '#E5E5E5'
+    }
+
+    function selectNode(selectedNode) {
+      neighbors = getNeighbors(selectedNode)
+      nodeElements
+        .attr('fill', node => getNodeColor(node, neighbors))
+      textElements
+        .attr('fill', node => getTextColor(node, neighbors))
+      linkElements
+        .attr('stroke', link => getLinkColor(selectedNode, link))
+    }
+
+    nodeElements.on('click', selectNode)
   }
 
   shouldComponentUpdate() {
