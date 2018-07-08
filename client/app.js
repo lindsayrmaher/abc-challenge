@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Routes from './components/Routes'
+import D3 from './components/D3'
 import { withRouter } from 'react-router-dom'
 import { fetchCollections } from './store'
 
@@ -14,6 +15,7 @@ class App extends Component {
       <div className="App">
         <div>App has mounted!</div>
         <Routes />
+        <D3 />
       </div>
     );
   }
