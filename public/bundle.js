@@ -359,19 +359,57 @@ var D3Graph = function (_Component) {
     value: function componentWillReceiveProps(nextProps) {
       // Apply whatever changes you would like given new props here
       // this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng })
+
+      //Updating and mutating nodes
+      // function updateData(selectedNode) {
+      //   const neighbors = getNeighbors(selectedNode)
+      //   const newNodes = baseNodes.filter(node => {
+      //     return neighbors.indexOf(node.id) > -1 || node.level === 1
+      //   })
+      //   const diff = {
+      //     removed: nodes.filter(node => newNodes.indexOf(node) === -1),
+      //     added: newNodes.filter(node => nodes.indexOf(node) === -1)
+      //   }
+      //   diff.removed.forEach(node => nodes.splice(nodes.indexOf(node), 1))
+      //   diff.added.forEach(node => nodes.push(node))
+      //   links = baseLinks.filter(link => {
+      //     return link.target.id === selectedNode.id ||
+      //       link.source.id === selectedNode.id
+      //   })
+      // }
+
+      // const linkGroup = svg.append("g").attr("class", "links")
+      // const nodeGroup = svg.append("g").attr("class", "nodes")
+      // const textGroup = svg.append("g").attr("class", "texts")
+      // let linkElements, nodeElements, textElements
+
+      // linkElements = linkGroup.selectAll("line").data(links, link => {
+      //   return link.target.id + link.source.id
+      // })
+
+      // // 1. remove old nodes
+      // linkElements.exit().remove()
+
+      // // 2. enter and create new ones
+      // const linkEnter = linkElements
+      //   .enter().append("line")
+      //   .attr("stroke-width", 1)
+      //   .attr("stroke", "rgba(50, 50, 50, 0.2)")
+
+      // // 3. merge
+      // linkElements = linkEnter.merge(linkElements)
+
+      // function updateSimulation() {
+      //   updateGraph()
+      //   simulation.nodes.on("tick", /* see above */)
+      //   simulation.force("links")
+      //   simulation.restart()
+      // }
     }
   }, {
     key: "render",
     value: function render() {
-      return _react2.default.createElement(
-        "div",
-        { id: "d3", ref: "d3" },
-        _react2.default.createElement(
-          "div",
-          null,
-          "Well helloooo there"
-        )
-      );
+      return _react2.default.createElement("div", { id: "d3", ref: "d3" });
     }
   }]);
 
