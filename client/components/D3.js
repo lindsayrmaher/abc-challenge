@@ -44,23 +44,28 @@ class D3Graph extends Component {
       { target: "pike", source: "dog", strength: 0.1 }
     ]
 
+    // Setting the variable height/width of the SVG element
     const width = window.innerWidth
     const height = window.innerHeight
+
+    // Create SVG element and add attributes
     const svg = d3.select(this.refs.d3)
       .append('svg')
         .attr('refs', 'svg')
-        .attr('width', 500)
-        .attr('height', '500px')
+        .attr('width', width)
+        .attr('height', height)
 
-    // Not sure if this is working or not
+    // Create force simulation for nodes
     const simulation = d3.forceSimulation()
       .force('charge', d3.forceManyBody().strength(-20))
       .force('center', d3.forceCenter(width / 2, height / 2))
 
+    // Generate node colors
     const getNodeColor = (node) => {
       return node.level === 1 ? 'red' : 'gray'
     }
 
+    // Create circles (nodes) with information from our nodes array
     const nodeElements = svg.append('g')
       .selectAll(this.refs.circle)
       .data(nodes)
@@ -69,6 +74,7 @@ class D3Graph extends Component {
         .attr('r', 10)
         .attr('fill', getNodeColor)
 
+    // Create labels for our circles with information from our nodes array
     const textElements = svg.append('g')
       .selectAll(this.refs.text)
       .data(nodes)
@@ -79,14 +85,38 @@ class D3Graph extends Component {
         .attr('dx', 15)
         .attr('dy', 4)
 
+    // Create our tick function, updating our x/y axes for each node on each tick
     simulation.nodes(nodes).on('tick', () => {
       nodeElements
-        .attr('cx', node => node.x - 150)
-        .attr('cy', node => node.y - 150)
+        .attr('cx', node => node.x)
+        .attr('cy', node => node.y)
       textElements
-        .attr('x', node => node.x - 150)
-        .attr('y', node => node.y - 150)
+        .attr('x', node => node.x)
+        .attr('y', node => node.y)
+      linkElements
+        .attr('x1', link => link.source.x)
+        .attr('y1', link => link.source.y)
+        .attr('x2', link => link.target.x)
+        .attr('y2', link => link.target.y)
     })
+
+    // Create a link force that is related to the link strength in our array of data
+    simulation.force('link', d3.forceLink()
+      .id(link => link.id)
+      .strength(link => link.strength))
+
+    // Create the links themselves
+    const linkElements = svg.append('g')
+      .selectAll(this.refs.line)
+      .data(links)
+      .enter().append('line')
+      .attr('refs', 'line')
+      .attr('stroke-width', 1)
+      .attr('stroke', '#3f3f3f')
+
+    // What is the difference between this and line 104? Why can't I combine them?
+    simulation.force('link').links(links)
+
 
   }
 
