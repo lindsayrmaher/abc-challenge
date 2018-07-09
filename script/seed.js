@@ -36,77 +36,62 @@ async function seed() {
 
   const seedCharacters = await Promise.all([
     Character.create({
-        name: 'Arya',
-        family: 'Stark',
-        nickname: 'No One',
-        age: 12
-      })
+      label: 'Arya',
+      family: 'Stark',
+      nickname: 'No One',
+      age: 12
+    })
       .then(character => character.setCollections([1])),
     Character.create({
-      name: 'Ned',
+      label: 'Ned',
       family: 'Stark',
       nickname: 'The Quiet Wolf',
       age: 35
     })
       .then(character => character.setCollections([1])),
     Character.create({
-      name: 'Joffrey',
+      label: 'Joffrey',
       family: 'Baratheon',
       age: 13
     })
       .then(character => character.setCollections([1])),
     Character.create({
-      name: 'Anna',
+      label: 'Anna',
       family: 'Karenina',
       age: 24
     })
       .then(character => character.setCollections([2])),
     Character.create({
-      name: 'Alexei',
+      label: 'Alexei',
       family: 'Vronsky',
       age: 27
     })
       .then(character => character.setCollections([2])),
     Character.create({
-      name: 'Alexei',
+      label: 'Alexei',
       family: 'Karenin',
       age: 35
     })
       .then(character => character.setCollections([2])),
     Character.create({
-      name: 'Bilbo',
+      label: 'Bilbo',
       family: 'Baggins',
       age: 101
     })
       .then(character => character.setCollections([3])),
     Character.create({
-      name: 'Frodo',
+      label: 'Frodo',
       family: 'Baggins',
       age: 35
     })
       .then(character => character.setCollections([3])),
     Character.create({
-      name: 'Samwise',
+      label: 'Samwise',
       family: 'Gamgee',
       age: 33
     })
       .then(character => character.setCollections([3]))
     ])
-
-  // const categories = await Promise.all([
-  //   Category.create({
-  //     name: 'Vegetarian'
-  //   }),
-  //   Category.create({
-  //     name: 'Non-Vegetarian'
-  //   }),
-  //   Category.create({
-  //     name: 'Breakfast'
-  //   }),
-  //   Category.create({
-  //     name: 'Paleo'
-  //   })
-  // ])
 
   console.log(`seeded ${seedUsers.length} users, ${seedCollections.length} collections, and ${seedCharacters.length} characters`)
   console.log(`seeded successfully`)
@@ -125,9 +110,4 @@ seed()
     console.log('db connection closed')
   })
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
 console.log('seeding...')
