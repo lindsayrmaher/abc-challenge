@@ -222,17 +222,15 @@ var D3Graph = function (_Component) {
   _createClass(D3Graph, [{
     key: 'd3HelperFunction',
     value: function d3HelperFunction() {
-      var collectionsArg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-
-      // let nodes = collectionsArg
+      //console.log("collections: ", collectionsArg)
+      console.log(this.state);
       var nodes = [{ id: "mammal", group: 0, label: "Mammals", level: 1 }, { id: "dog", group: 0, label: "Dogs", level: 2 }, { id: "cat", group: 0, label: "Cats", level: 2 }, { id: "fox", group: 0, label: "Foxes", level: 2 }, { id: "elk", group: 0, label: "Elk", level: 2 }, { id: "insect", group: 1, label: "Insects", level: 1 }, { id: "ant", group: 1, label: "Ants", level: 2 }, { id: "bee", group: 1, label: "Bees", level: 2 }, { id: "fish", group: 2, label: "Fish", level: 1 }, { id: "carp", group: 2, label: "Carp", level: 2 }, { id: "pike", group: 2, label: "Pikes", level: 2 }];
 
-      var links = [{ target: '1', source: '2', strength: 1 }, { target: '3', source: '2', strength: 0.7 }, { target: '1', source: '3', strength: 0.4 }, { target: '2', source: '1', strength: 1 }];
+      var links = [{ target: "mammal", source: "dog", strength: 0.7 }, { target: "mammal", source: "cat", strength: 0.7 }, { target: "mammal", source: "fox", strength: 0.7 }, { target: "mammal", source: "elk", strength: 0.7 }, { target: "insect", source: "ant", strength: 0.7 }];
 
-      console.log("collectionInfo: ", collectionsArg);
-      if (collectionsArg.length > 1) {
-        nodes = collectionsArg[0].characters;
-      }
+      // if (collectionsArg.length > 1) {
+      //   nodes = collectionsArg[0].characters
+      // }
 
       // Setting the variable height/width of the SVG element
       var width = window.innerWidth;
@@ -358,7 +356,7 @@ var D3Graph = function (_Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      this.d3HelperFunction(this.props.collections);
+      this.setState({ collections: this.props.collections });
     }
   }, {
     key: 'shouldComponentUpdate',
@@ -368,7 +366,13 @@ var D3Graph = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      this.d3HelperFunction(nextProps.collections);
+      var _this2 = this;
+
+      // Calling helper function AFTER setState has resolved
+      this.setState({ collections: nextProps.collections }, function () {
+        _this2.d3HelperFunction();
+      });
+
       // Apply whatever changes you would like given new props here
 
       //Updating and mutating nodes

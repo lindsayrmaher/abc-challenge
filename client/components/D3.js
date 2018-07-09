@@ -8,8 +8,9 @@ class D3Graph extends Component {
     super(props)
   }
 
-  d3HelperFunction(collectionsArg = []) {
-    // let nodes = collectionsArg
+  d3HelperFunction() {
+    //console.log("collections: ", collectionsArg)
+    console.log(this.state)
     let nodes = [
       { id: "mammal", group: 0, label: "Mammals", level: 1 },
       { id: "dog", group: 0, label: "Dogs", level: 2 },
@@ -25,16 +26,16 @@ class D3Graph extends Component {
     ]
 
     let links = [
-      { target: '1', source: '2', strength: 1 },
-      { target: '3', source: '2', strength: 0.7 },
-      { target: '1', source: '3', strength: 0.4 },
-      { target: '2', source: '1', strength: 1 }
+      { target: "mammal", source: "dog", strength: 0.7 },
+      { target: "mammal", source: "cat", strength: 0.7 },
+      { target: "mammal", source: "fox", strength: 0.7 },
+      { target: "mammal", source: "elk", strength: 0.7 },
+      { target: "insect", source: "ant", strength: 0.7 }
     ]
 
-    console.log("collectionInfo: ", collectionsArg)
-    if (collectionsArg.length > 1) {
-      nodes = collectionsArg[0].characters
-    }
+    // if (collectionsArg.length > 1) {
+    //   nodes = collectionsArg[0].characters
+    // }
 
     // Setting the variable height/width of the SVG element
     const width = window.innerWidth
@@ -173,7 +174,7 @@ class D3Graph extends Component {
   }
 
   componentDidMount() {
-    this.d3HelperFunction(this.props.collections)
+    this.setState({ collections: this.props.collections })
   }
 
   shouldComponentUpdate() {
@@ -181,7 +182,11 @@ class D3Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.d3HelperFunction(nextProps.collections)
+    // Calling helper function AFTER setState has resolved
+    this.setState({ collections: nextProps.collections }, () => {
+      this.d3HelperFunction()
+    })
+
     // Apply whatever changes you would like given new props here
 
     //Updating and mutating nodes

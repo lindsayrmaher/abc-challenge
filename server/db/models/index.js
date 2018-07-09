@@ -1,15 +1,26 @@
 // Require in all of our models
 const Character = require('./character')
 const Collection = require('./collection')
+const Group = require('./group')
+const Link = require('./link')
+const Story = require('./story')
 const User = require('./user')
 
 // Set up relationships
 User.hasMany(Collection)
 
 Collection.belongsTo(User)
-Collection.belongsToMany(Character, { through: 'CharacterCollection' })
+Collection.hasMany(Story)
 
-Character.belongsToMany(Collection, { through: 'CharacterCollection' })
+Story.belongsTo(Collection)
+Story.hasMany(Group)
+
+Group.belongsTo(Story)
+Group.hasMany(Character)
+
+Character.belongsTo(Group)
+
+Character.belongsToMany(Character, { as: 'link', through: 'links' })
 
 // Export models
-module.exports = { Character, Collection, User }
+module.exports = { Character, Collection, Group, Link, Story, User }

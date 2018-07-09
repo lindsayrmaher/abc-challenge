@@ -2,13 +2,9 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 const Character = db.define('character', {
-  label: {
+  name: {
     type: Sequelize.STRING,
     allowNull: false
-  },
-  group: {
-    type: Sequelize.INTEGER,
-    defaultValue: 1
   },
   level: {
     type: Sequelize.INTEGER,
