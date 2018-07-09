@@ -1,5 +1,5 @@
 const db = require('../server/db')
-const { Character, Collection, User } = require('../server/db/models')
+const { Character, Collection, Group, Link, Story, User } = require('../server/db/models')
 
 async function seed() {
   await db.sync({ force: true })
@@ -7,7 +7,8 @@ async function seed() {
 
   let seedUsers;
   let seedCollections;
-  //let seedCharacters;
+  let seedStories;
+  let seedGroups;
 
   //one admin user for testing purposes
   await User.bulkCreate([
@@ -23,90 +24,104 @@ async function seed() {
   })
 
   await Collection.bulkCreate([
-    { title: 'Game of Thrones', description: 'Dragons, War and Magic!' },
-    { title: 'Anna Karenina', description: 'Intrigue, Romance and Revolt!' },
+    { title: 'Harry Potter', description: 'Wizards, Muggles and Magic!' },
+    { title: 'Tolstoy', description: 'Russian Sadness' },
     { title: 'Lord of the Rings', description: 'Action, Adventure, and Bravery!' }
   ]).then(() => {
-    console.log('created collections!')
     return Collection.findAll()
   }).then(collections => {
     seedCollections = collections;
-    console.log('got all the collections')
+    collections.forEach(collection => {
+      collection.setUser(1)
+    })
+  })
+
+  await Story.bulkCreate([
+    { title: `The Sorcerer's Stone`, description: `You're a wizard, Harry!` },
+    { title: 'Anna Karenina', description: 'Intrigue, Romance and Revolt!' },
+    { title: 'Return of the King', description: 'Aragorn wins everything' }
+  ]).then(() => {
+    return Story.findAll()
+  }).then(stories => {
+    seedStories = stories;
+    stories[0].setCollection(1)
+    stories[1].setCollection(2)
+    stories[2].setCollection(3)
+  })
+
+  await Group.bulkCreate([
+    { title: `Gryffindor`, description: `They're the best` },
+    { title: 'Slytherin', description: 'We all hate them' },
+    { title: 'Ravenclaw', description: 'Stop trying to make Ravenclaw happen' },
+    { title: 'Hufflepuff', description: 'Cutie patooties' }
+  ]).then(() => {
+    return Group.findAll()
+  }).then(groups => {
+    seedGroups = groups;
+    groups.forEach(group => {
+      group.setStory(1)
+    })
   })
 
   const seedCharacters = await Promise.all([
     Character.create({
-        name: 'Arya',
-        family: 'Stark',
-        nickname: 'No One',
-        age: 12
-      })
-      .then(character => character.setCollections([1])),
-    Character.create({
-      name: 'Ned',
-      family: 'Stark',
-      nickname: 'The Quiet Wolf',
-      age: 35
+      name: 'Harry Potter',
+      nickname: 'No One',
+      age: 12
     })
-      .then(character => character.setCollections([1])),
+      .then(character => (character.setGroup(1))),
     Character.create({
-      name: 'Joffrey',
-      family: 'Baratheon',
+      name: 'Ron Weasley',
+      age: 12
+    })
+      .then(character => {
+        character.addLink(1)
+        character.setGroup(1)
+      }),
+    Character.create({
+      name: 'Hermione Granger',
+      age: 12
+    })
+      .then(character => {
+        character.addLink(2)
+        character.addLink(1)
+        character.setGroup(1)
+      }),
+    Character.create({
+      name: 'Luna Lovegood',
       age: 13
     })
-      .then(character => character.setCollections([1])),
+      .then(character => {
+        character.addLink(3)
+        character.addLink(1)
+        character.setGroup(3)
+      }),
     Character.create({
-      name: 'Anna',
-      family: 'Karenina',
-      age: 24
-    })
-      .then(character => character.setCollections([2])),
-    Character.create({
-      name: 'Alexei',
-      family: 'Vronsky',
+      name: 'Professor Snape',
       age: 27
     })
-      .then(character => character.setCollections([2])),
+      .then(character => (character.setGroup(2))),
     Character.create({
-      name: 'Alexei',
-      family: 'Karenin',
-      age: 35
+      name: 'Cedric Diggory',
+      age: 14
     })
-      .then(character => character.setCollections([2])),
+      .then(character => (character.setGroup(4))),
     Character.create({
-      name: 'Bilbo',
-      family: 'Baggins',
+      name: 'Albus Dumbledore',
       age: 101
     })
-      .then(character => character.setCollections([3])),
+      .then(character => (character.setGroup(1))),
     Character.create({
-      name: 'Frodo',
-      family: 'Baggins',
-      age: 35
+      name: 'Draco Malfoy',
+      age: 12
     })
-      .then(character => character.setCollections([3])),
+      .then(character => (character.setGroup(2))),
     Character.create({
-      name: 'Samwise',
-      family: 'Gamgee',
+      name: 'Peter Pettigrew',
       age: 33
     })
-      .then(character => character.setCollections([3]))
+      .then(character => (character.setGroup(2)))
     ])
-
-  // const categories = await Promise.all([
-  //   Category.create({
-  //     name: 'Vegetarian'
-  //   }),
-  //   Category.create({
-  //     name: 'Non-Vegetarian'
-  //   }),
-  //   Category.create({
-  //     name: 'Breakfast'
-  //   }),
-  //   Category.create({
-  //     name: 'Paleo'
-  //   })
-  // ])
 
   console.log(`seeded ${seedUsers.length} users, ${seedCollections.length} collections, and ${seedCharacters.length} characters`)
   console.log(`seeded successfully`)
@@ -125,9 +140,4 @@ seed()
     console.log('db connection closed')
   })
 
-/*
- * note: everything outside of the async function is totally synchronous
- * The console.log below will occur before any of the logs that occur inside
- * of the async function
- */
 console.log('seeding...')

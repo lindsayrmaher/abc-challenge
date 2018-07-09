@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import * as d3 from "d3"
 
 class D3Graph extends Component {
@@ -6,13 +8,9 @@ class D3Graph extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    // In a given example, here's where you instantiate your Google Map
-    // IMPORTANT: this.refs.d3 is how we would reference our dummy div below
-    // new.google.maps.Map(this.refs.map, {
-    //  center: { lat: this.props.lat, lng: this.props.lng }
-    //  zoom: 8
-    // })
+  d3HelperFunction() {
+    //console.log("collections: ", collectionsArg)
+    console.log(this.state)
     let nodes = [
       { id: "mammal", group: 0, label: "Mammals", level: 1 },
       { id: "dog", group: 0, label: "Dogs", level: 2 },
@@ -32,17 +30,12 @@ class D3Graph extends Component {
       { target: "mammal", source: "cat", strength: 0.7 },
       { target: "mammal", source: "fox", strength: 0.7 },
       { target: "mammal", source: "elk", strength: 0.7 },
-      { target: "insect", source: "ant", strength: 0.7 },
-      { target: "insect", source: "bee", strength: 0.7 },
-      { target: "fish", source: "carp", strength: 0.7 },
-      { target: "fish", source: "pike", strength: 0.7 },
-      { target: "cat", source: "elk", strength: 0.1 },
-      { target: "carp", source: "ant", strength: 0.1 },
-      { target: "elk", source: "bee", strength: 0.1 },
-      { target: "dog", source: "cat", strength: 0.1 },
-      { target: "fox", source: "ant", strength: 0.1 },
-      { target: "pike", source: "dog", strength: 0.1 }
+      { target: "insect", source: "ant", strength: 0.7 }
     ]
+
+    // if (collectionsArg.length > 1) {
+    //   nodes = collectionsArg[0].characters
+    // }
 
     // Setting the variable height/width of the SVG element
     const width = window.innerWidth
@@ -180,13 +173,21 @@ class D3Graph extends Component {
     nodeElements.on('click', selectNode)
   }
 
+  componentDidMount() {
+    this.setState({ collections: this.props.collections })
+  }
+
   shouldComponentUpdate() {
     return false;
   }
 
   componentWillReceiveProps(nextProps) {
+    // Calling helper function AFTER setState has resolved
+    this.setState({ collections: nextProps.collections }, () => {
+      this.d3HelperFunction()
+    })
+
     // Apply whatever changes you would like given new props here
-    // this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng })
 
     //Updating and mutating nodes
     // function updateData(selectedNode) {

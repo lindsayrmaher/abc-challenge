@@ -15,13 +15,13 @@ class App extends Component {
       <div className="App">
         <div>App has mounted!</div>
         <Routes />
-        <D3 />
+        <D3 collections={this.props.collections}/>
       </div>
     );
   }
 }
 
-const mapState = (state) => ({state})
+const mapState = (state) => ({ collections: state.collections })
 
 const mapDispatch = { fetchCollections }
 

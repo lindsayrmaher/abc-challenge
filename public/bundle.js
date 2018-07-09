@@ -154,7 +154,7 @@ var App = function (_Component) {
           'App has mounted!'
         ),
         _react2.default.createElement(_Routes2.default, null),
-        _react2.default.createElement(_D2.default, null)
+        _react2.default.createElement(_D2.default, { collections: this.props.collections })
       );
     }
   }]);
@@ -163,7 +163,7 @@ var App = function (_Component) {
 }(_react.Component);
 
 var mapState = function mapState(state) {
-  return { state: state };
+  return { collections: state.collections };
 };
 
 var mapDispatch = { fetchCollections: _store.fetchCollections };
@@ -192,6 +192,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
 var _d = __webpack_require__(/*! d3 */ "./node_modules/d3/index.js");
 
 var d3 = _interopRequireWildcard(_d);
@@ -216,17 +220,17 @@ var D3Graph = function (_Component) {
   }
 
   _createClass(D3Graph, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // In a given example, here's where you instantiate your Google Map
-      // IMPORTANT: this.refs.d3 is how we would reference our dummy div below
-      // new.google.maps.Map(this.refs.map, {
-      //  center: { lat: this.props.lat, lng: this.props.lng }
-      //  zoom: 8
-      // })
+    key: 'd3HelperFunction',
+    value: function d3HelperFunction() {
+      //console.log("collections: ", collectionsArg)
+      console.log(this.state);
       var nodes = [{ id: "mammal", group: 0, label: "Mammals", level: 1 }, { id: "dog", group: 0, label: "Dogs", level: 2 }, { id: "cat", group: 0, label: "Cats", level: 2 }, { id: "fox", group: 0, label: "Foxes", level: 2 }, { id: "elk", group: 0, label: "Elk", level: 2 }, { id: "insect", group: 1, label: "Insects", level: 1 }, { id: "ant", group: 1, label: "Ants", level: 2 }, { id: "bee", group: 1, label: "Bees", level: 2 }, { id: "fish", group: 2, label: "Fish", level: 1 }, { id: "carp", group: 2, label: "Carp", level: 2 }, { id: "pike", group: 2, label: "Pikes", level: 2 }];
 
-      var links = [{ target: "mammal", source: "dog", strength: 0.7 }, { target: "mammal", source: "cat", strength: 0.7 }, { target: "mammal", source: "fox", strength: 0.7 }, { target: "mammal", source: "elk", strength: 0.7 }, { target: "insect", source: "ant", strength: 0.7 }, { target: "insect", source: "bee", strength: 0.7 }, { target: "fish", source: "carp", strength: 0.7 }, { target: "fish", source: "pike", strength: 0.7 }, { target: "cat", source: "elk", strength: 0.1 }, { target: "carp", source: "ant", strength: 0.1 }, { target: "elk", source: "bee", strength: 0.1 }, { target: "dog", source: "cat", strength: 0.1 }, { target: "fox", source: "ant", strength: 0.1 }, { target: "pike", source: "dog", strength: 0.1 }];
+      var links = [{ target: "mammal", source: "dog", strength: 0.7 }, { target: "mammal", source: "cat", strength: 0.7 }, { target: "mammal", source: "fox", strength: 0.7 }, { target: "mammal", source: "elk", strength: 0.7 }, { target: "insect", source: "ant", strength: 0.7 }];
+
+      // if (collectionsArg.length > 1) {
+      //   nodes = collectionsArg[0].characters
+      // }
 
       // Setting the variable height/width of the SVG element
       var width = window.innerWidth;
@@ -350,15 +354,26 @@ var D3Graph = function (_Component) {
       nodeElements.on('click', selectNode);
     }
   }, {
-    key: "shouldComponentUpdate",
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({ collections: this.props.collections });
+    }
+  }, {
+    key: 'shouldComponentUpdate',
     value: function shouldComponentUpdate() {
       return false;
     }
   }, {
-    key: "componentWillReceiveProps",
+    key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
+      var _this2 = this;
+
+      // Calling helper function AFTER setState has resolved
+      this.setState({ collections: nextProps.collections }, function () {
+        _this2.d3HelperFunction();
+      });
+
       // Apply whatever changes you would like given new props here
-      // this.map.panTo({ lat: nextProps.lat, lng: nextProps.lng })
 
       //Updating and mutating nodes
       // function updateData(selectedNode) {
@@ -407,9 +422,9 @@ var D3Graph = function (_Component) {
       // }
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
-      return _react2.default.createElement("div", { id: "d3", ref: "d3" });
+      return _react2.default.createElement('div', { id: 'd3', ref: 'd3' });
     }
   }]);
 

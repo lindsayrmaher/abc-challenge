@@ -6,8 +6,9 @@ const Character = db.define('character', {
     type: Sequelize.STRING,
     allowNull: false
   },
-  family: {
-    type: Sequelize.STRING
+  level: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1
   },
   nickname: {
     type: Sequelize.STRING
