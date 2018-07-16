@@ -4,23 +4,20 @@ const apiKey = process.env.APIKEY
 const newsapi = new NewsAPI(apiKey)
 module.exports = router
 
-router.get('/', (req, res, next) => {
-  newsapi.v2.topHeadlines({
-    language: 'en'
+router.get('/', async (req, res, next) => {
+  const articles = await newsapi.v2.topHeadlines({
+    country: 'us'
   })
-    .then(articles => {
-      res.send(articles).status(200)
-    })
+  res.send(articles).status(200)
+
 })
 
-router.get('/:category', (req, res, next) => {
-  newsapi.v2.topHeadlines({
+router.get('/:category', async (req, res, next) => {
+  const articles = await newsapi.v2.topHeadlines({
     category: req.params.category,
-    language: 'en'
+    country: 'us'
   })
-    .then(articles => {
-      res.send(articles).status(200)
-    })
+  res.send(articles).status(200)
 })
 
 

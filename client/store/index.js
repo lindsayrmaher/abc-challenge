@@ -11,5 +11,5 @@ const middleware = composeWithDevTools(applyMiddleware(
 ))
 const store = createStore(reducer, middleware)
 
-export default stores
+export default store
 export * from './articles'

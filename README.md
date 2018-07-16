@@ -15,7 +15,7 @@ In order to use this app locally, there are just a few steps you'll need to foll
 
 ---
 
-##Built Using:
+## Built Using:
 
 - [NewsApi](https://newsapi.org/)
 - [Express](https://expressjs.com/)
