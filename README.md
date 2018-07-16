@@ -4,16 +4,6 @@ This project is a small coding challenge displaying the news for the day!
 
 ---
 
-##Built Using:
-
-- NewsApi
-- Express
-- React
-- React-Redux
-- CSS
-
----
-
 ## Get Up and Running
 In order to use this app locally, there are just a few steps you'll need to follow!
 
@@ -22,3 +12,14 @@ In order to use this app locally, there are just a few steps you'll need to foll
 3. in server/api/index.js, be sure to replace the apiKey variable with your own NewsAPI key
   - if you're feeling fancy, you can create a secrets.js file and store your key there as a process.env variable :)
 4. run `npm run start-dev` and head to localhost:8080 to play!
+
+---
+
+##Built Using:
+
+- [NewsApi](https://newsapi.org/)
+- [Express](https://expressjs.com/)
+- [React](https://reactjs.org/)
+- [React-Redux](https://github.com/reduxjs/react-redux)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+
