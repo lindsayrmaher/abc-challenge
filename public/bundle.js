@@ -150,7 +150,7 @@ var App = function (_Component) {
           null,
           ' Organize them by category, if you\'d like'
         ),
-        _react2.default.createElement(_components.AllArticles, null)
+        _react2.default.createElement(_components.Routes, null)
       );
     }
   }]);
@@ -188,6 +188,10 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _reactRedux = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+
 var _store = __webpack_require__(/*! ../store */ "./client/store/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -208,12 +212,22 @@ var AllArticles = function (_Component) {
   }
 
   _createClass(AllArticles, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.setState(function () {
+        _this2.props.fetchArticles();
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log(this.state);
       return _react2.default.createElement(
         'div',
         null,
-        'Hello'
+        _react2.default.createElement('div', null)
       );
     }
   }]);
@@ -221,7 +235,11 @@ var AllArticles = function (_Component) {
   return AllArticles;
 }(_react.Component);
 
-exports.default = AllArticles;
+// const mapState
+
+var mapDispatch = { fetchArticles: _store.fetchArticles };
+
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(null, mapDispatch)(AllArticles));
 
 /***/ }),
 
