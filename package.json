@@ -1,18 +1,16 @@
 {
-  "name": "plot-lines",
+  "name": "abc-news-challenge",
   "version": "1.0.0",
-  "description": "An app for tracking characters in books, TV and film",
+  "description": "A small app for seeing the news for an abc coding challenge",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/k-vosswinkel/plot-lines-take-2"
+    "url": "https://github.com/lindsayrmaher/abc-challenge"
   },
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "connect-session-sequelize": "^5.2.2",
-    "d3": "^5.5.0",
-    "d3-force": "^1.1.0",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "morgan": "^1.9.0",
