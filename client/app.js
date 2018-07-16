@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import { AllArticles } from './components'
 
 class App extends Component {
   componentDidMount() {
@@ -10,15 +11,16 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>App has mounted!</div>
-        <Routes />
+        <div>See the top headlines every day</div>
+        <div> Organize them by category, if you'd like</div>
+        <AllArticles />
       </div>
     );
   }
 }
 
-// const mapState = (state) => ()
+const mapState = (state) => ({ articles: state.articles })
 
 const mapDispatch = {}
 
-export default withRouter(connect(null, mapDispatch)(App));
+export default withRouter(connect(mapState, mapDispatch)(App));
