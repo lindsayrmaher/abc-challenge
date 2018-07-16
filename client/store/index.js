@@ -2,9 +2,9 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-// import collections from './collections'
+import articles from './articles'
 
-export const reducer = combineReducers({})
+export const reducer = combineReducers({ articles })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({ collapsed: true })
@@ -12,4 +12,4 @@ const middleware = composeWithDevTools(applyMiddleware(
 const store = createStore(reducer, middleware)
 
 export default stores
-// export * from './collections'
+export * from './articles'
