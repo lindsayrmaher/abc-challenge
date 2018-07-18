@@ -135,16 +135,16 @@ var App = function (_Component) {
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'App' },
+        { className: 'App container center-align' },
         _react2.default.createElement(
           'h1',
           null,
           'Top Headlines from NewsAPI'
         ),
         _react2.default.createElement(
-          'p',
+          'h4',
           null,
-          ' Organize them by category, if you\'d like'
+          ' Click on a source name to see the top articles from different outlets!'
         ),
         _react2.default.createElement(_components.AllArticles, null)
       );
@@ -319,20 +319,20 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Article = function Article(props) {
   return _react2.default.createElement(
-    'div',
-    null,
+    "div",
+    { className: "left-align" },
     _react2.default.createElement(
-      'h2',
+      "h2",
       null,
       props.articleInfo.title
     ),
     _react2.default.createElement(
-      'h3',
+      "h3",
       null,
       props.articleInfo.source.name
     ),
     _react2.default.createElement(
-      'p',
+      "p",
       null,
       props.articleInfo.publishedAt
     )
@@ -340,6 +340,11 @@ var Article = function Article(props) {
 };
 
 exports.default = Article;
+
+// link the source name to the page with only that particular source.
+// set the sourcemane selected as the url when searching
+// pass the selectedName down to this component
+// use that props to link to source page, display similar source articles
 
 /***/ }),
 

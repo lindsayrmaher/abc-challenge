@@ -8,9 +8,9 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App container center-align">
         <h1>Top Headlines from NewsAPI</h1>
-        <p> Organize them by category, if you'd like</p>
+        <h4> Click on a source name to see the top articles from different outlets!</h4>
         <AllArticles />
       </div>
     );

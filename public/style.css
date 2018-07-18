@@ -1,9 +1,12 @@
 body {
-  background-color: white;
+  background-color: #c9e9f6;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
 }
 
 h1 {
-  text-align: center;
+  /* text-align: center; */
+  font-family: 'Abril Fatface', cursive;
 }
 
 h2 {
@@ -14,4 +17,10 @@ h3 {
   font-size: 18px;
 }
 
+h4 {
+  font-size: 16px;
+}
+
+/* give each article background color and padding between each div */
+/* make the article boxes hoverable with the drop shadow */
 
