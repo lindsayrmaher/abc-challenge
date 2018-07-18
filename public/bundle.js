@@ -346,6 +346,9 @@ exports.default = Article;
 // pass the selectedName down to this component
 // use that props to link to source page, display similar source articles
 
+
+//generally, clean up unused components and stuff (ie router stuff)
+
 /***/ }),
 
 /***/ "./client/components/Routes.js":
