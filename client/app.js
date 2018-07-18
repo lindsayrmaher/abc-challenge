@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AllArticles } from './components'
+import { Routes } from './components'
 
 export default class App extends Component {
   componentDidMount() {
@@ -11,7 +11,7 @@ export default class App extends Component {
       <div className="App container center-align">
         <h1>Top Headlines from NewsAPI</h1>
         <h4> Click on a source name to see the top articles from different outlets!</h4>
-        <AllArticles />
+        <Routes />
       </div>
     );
   }
