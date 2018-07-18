@@ -334,7 +334,7 @@ var Article = function Article(props) {
     _react2.default.createElement(
       'p',
       null,
-      props.articleInfo.description
+      props.articleInfo.publishedAt
     )
   );
 };

@@ -5,7 +5,7 @@ const Article = (props) => {
     <div>
       <h2>{props.articleInfo.title}</h2>
       <h3>{props.articleInfo.source.name}</h3>
-      <p>{props.articleInfo.description}</p>
+      <p>{props.articleInfo.publishedAt}</p>
     </div>
   )
 }

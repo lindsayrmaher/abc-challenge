@@ -1,6 +1,6 @@
 # ABC News / Walt Disney Coding Challenge
 
-This project is a small coding challenge displaying the news for the day! 
+This project is a small coding challenge displaying the news for the day! I decided to use plain React with this application rather than redux or react-redux because of the simplicity of the state management. Because the endpoints on the NewsAPI give us similar information, I decided to instead take advantage of the top headlines endpoint and futher query that with different sources!
 
 ---
 
@@ -20,6 +20,5 @@ In order to use this app locally, there are just a few steps you'll need to foll
 - [NewsApi](https://newsapi.org/)
 - [Express](https://expressjs.com/)
 - [React](https://reactjs.org/)
-- [React-Redux](https://github.com/reduxjs/react-redux)
-- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference)
+- [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference) & [Materialize](https://materializecss.com/)
 
