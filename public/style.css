@@ -2,11 +2,12 @@ body {
   background-color: #c9e9f6;
   padding: 20px;
   font-family: 'Roboto', sans-serif;
+  color: #262626;
 }
 
 h1 {
   /* text-align: center; */
-  font-family: 'Abril Fatface', cursive;
+  font-family: 'Roboto Mono', monospace;
 }
 
 h2 {
@@ -19,6 +20,12 @@ h3 {
 
 h4 {
   font-size: 16px;
+}
+
+.article {
+background-color: #fff;
+margin: 15px;
+padding: 10px;
 }
 
 /* give each article background color and padding between each div */

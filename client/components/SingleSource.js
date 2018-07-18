@@ -2,30 +2,17 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import Article from './Article'
 
-export default class AllArticles extends Component {
+export default class SingleSource extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      articles: [],
-      selectedSource: ''
+      articles: []
     }
     this.sortArticles = this.sortArticles.bind(this)
   }
 
   componentDidMount() {
-    this.getArticles()
-  }
-
-  async getArticles() {
-    try {
-      const allArticles = await axios.get('/api/')
-      let articles = allArticles.data.articles
-      articles = this.sortArticles(articles)
-      this.setState({ articles })
-    }
-    catch (error) {
-      console.error('error fetching articles', error)
-    }
+    this.getArticlesBySource()
   }
 
   async getArticlesBySource() {
