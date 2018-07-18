@@ -28,6 +28,14 @@ margin: 15px;
 padding: 10px;
 }
 
-/* give each article background color and padding between each div */
-/* make the article boxes hoverable with the drop shadow */
+.headlineURL {
+  color: #262626;
+}
+
+.headlineURL:hover {
+  text-decoration: underline;
+}
+
+
+
 

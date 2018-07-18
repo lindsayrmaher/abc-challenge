@@ -10,7 +10,7 @@ export default class App extends Component {
     return (
       <div className="App container center-align">
         <h1>Top Headlines from NewsAPI</h1>
-        <h4> Click on a source name to see the top articles from different outlets!</h4>
+        <h4>These are the most recent top stories from around the news!</h4>
         <Routes />
       </div>
     );

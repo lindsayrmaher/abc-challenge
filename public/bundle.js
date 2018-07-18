@@ -144,7 +144,7 @@ var App = function (_Component) {
         _react2.default.createElement(
           'h4',
           null,
-          ' Click on a source name to see the top articles from different outlets!'
+          'These are the most recent top stories from around the news!'
         ),
         _react2.default.createElement(_components.Routes, null)
       );
@@ -360,6 +360,12 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _MoreOptions = __webpack_require__(/*! ./MoreOptions */ "./client/components/MoreOptions.js");
+
+var _MoreOptions2 = _interopRequireDefault(_MoreOptions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -379,7 +385,7 @@ var Article = function (_Component) {
     var _this = _possibleConstructorReturn(this, (Article.__proto__ || Object.getPrototypeOf(Article)).call(this, props));
 
     _this.state = {
-      selectedSource: ''
+      selectedStory: false
     };
 
     _this.handleClick = _this.handleClick.bind(_this);
@@ -390,46 +396,53 @@ var Article = function (_Component) {
     key: 'handleClick',
     value: function handleClick(event) {
       event.preventDefault();
-      console.log(event);
-      // this.setState({})
+      return this.setState({ selectedStory: !this.state.selectedStory });
     }
   }, {
     key: 'render',
     value: function render() {
+      var articleSource = this.props.articleInfo.source;
       var now = new Date(this.props.articleInfo.publishedAt);
       var newDate = date.format(now, 'YYYY/MM/DD HH:mm:ss');
-
+      var articleInfo = this.props.articleInfo;
       return _react2.default.createElement(
         'div',
         { className: 'left-align article z-depth-1 hoverable' },
         _react2.default.createElement(
-          'h4',
-          null,
-          newDate
-        ),
-        _react2.default.createElement(
-          'h2',
-          null,
-          this.props.articleInfo.title
+          'div',
+          { onClick: this.handleClick },
+          _react2.default.createElement(
+            'h4',
+            null,
+            newDate
+          )
         ),
         _react2.default.createElement(
           'a',
-          null,
+          { target: '_blank', className: 'headlineURL', href: this.props.articleInfo.url },
+          _react2.default.createElement(
+            'h2',
+            null,
+            this.props.articleInfo.title
+          )
+        ),
+        _react2.default.createElement(
+          _reactRouterDom.Link,
+          { to: '/source/' + articleSource.id },
           _react2.default.createElement(
             'h3',
             null,
             this.props.articleInfo.source.name
-          )
-        )
+          ),
+          ' '
+        ),
+        this.state.selectedStory ? _react2.default.createElement(_MoreOptions2.default, { articleInfo: articleInfo }) : null
       );
     }
   }]);
 
   return Article;
 }(_react.Component);
-
-// export default Article
-
 
 // link the source name to the page with only that particular source.
 // set the sourcemane selected as the url when searching
@@ -441,6 +454,49 @@ var Article = function (_Component) {
 
 
 exports.default = Article;
+
+/***/ }),
+
+/***/ "./client/components/MoreOptions.js":
+/*!******************************************!*\
+  !*** ./client/components/MoreOptions.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MoreOptions = function MoreOptions(props) {
+  console.log(props.articleInfo.description);
+  return _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      "h4",
+      null,
+      "More Article Info:"
+    ),
+    _react2.default.createElement(
+      "p",
+      null,
+      props.articleInfo.description
+    ),
+    _react2.default.createElement("img", { className: "responsive-img", src: props.articleInfo.urlToImage })
+  );
+};
+
+exports.default = MoreOptions;
 
 /***/ }),
 
@@ -458,8 +514,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -468,7 +522,58 @@ var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_module
 
 var _index = __webpack_require__(/*! ./index */ "./client/components/index.js");
 
+var _SingleSource = __webpack_require__(/*! ./SingleSource */ "./client/components/SingleSource.js");
+
+var _SingleSource2 = _interopRequireDefault(_SingleSource);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Routes = function Routes() {
+  return _react2.default.createElement(
+    _reactRouterDom.Switch,
+    null,
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _index.AllArticles }),
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/source', component: _SingleSource2.default })
+  );
+};
+
+exports.default = Routes;
+
+/***/ }),
+
+/***/ "./client/components/SingleSource.js":
+/*!*******************************************!*\
+  !*** ./client/components/SingleSource.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+
+var _Article = __webpack_require__(/*! ./Article */ "./client/components/Article.js");
+
+var _Article2 = _interopRequireDefault(_Article);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -476,31 +581,104 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Routes = function (_Component) {
-  _inherits(Routes, _Component);
+var SingleSource = function (_Component) {
+  _inherits(SingleSource, _Component);
 
-  function Routes() {
-    _classCallCheck(this, Routes);
+  function SingleSource(props) {
+    _classCallCheck(this, SingleSource);
 
-    return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (SingleSource.__proto__ || Object.getPrototypeOf(SingleSource)).call(this, props));
+
+    _this.state = {
+      articles: []
+    };
+    _this.sortArticles = _this.sortArticles.bind(_this);
+    return _this;
   }
 
-  _createClass(Routes, [{
+  _createClass(SingleSource, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.getArticlesBySource();
+    }
+  }, {
+    key: 'getArticlesBySource',
+    value: function () {
+      var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var allArticles, articles;
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.prev = 0;
+                _context.next = 3;
+                return _axios2.default.get('/api/:source');
+
+              case 3:
+                allArticles = _context.sent;
+                articles = allArticles.data.articles;
+
+                articles = this.sortArticles(articles);
+                this.setState({ articles: articles });
+                _context.next = 12;
+                break;
+
+              case 9:
+                _context.prev = 9;
+                _context.t0 = _context['catch'](0);
+
+                console.error('error fetching articles', _context.t0);
+
+              case 12:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, this, [[0, 9]]);
+      }));
+
+      function getArticlesBySource() {
+        return _ref.apply(this, arguments);
+      }
+
+      return getArticlesBySource;
+    }()
+  }, {
+    key: 'sortArticles',
+    value: function sortArticles(articles) {
+      var sortedArticles = void 0;
+      if (this.state.articles) {
+        sortedArticles = articles.sort(function (a, b) {
+          var dateA = new Date(a.publishedAt);
+          var dateB = new Date(b.publishedAt);
+          return dateA < dateB ? 1 : -1;
+        });
+      }
+      return sortedArticles;
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var articles = this.state.articles;
+      console.log(articles);
       return _react2.default.createElement(
-        _reactRouterDom.Switch,
+        'div',
         null,
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _index.AllArticles }),
-        _react2.default.createElement(_reactRouterDom.Route, { path: '/:source' })
+        !articles || articles.length === 0 ? _react2.default.createElement(
+          'div',
+          null,
+          'No articles to load!'
+        ) : articles.map(function (article) {
+          return _react2.default.createElement(_Article2.default, { key: article.id, articleInfo: article });
+        })
       );
     }
   }]);
 
-  return Routes;
+  return SingleSource;
 }(_react.Component);
 
-exports.default = Routes;
+exports.default = SingleSource;
 
 /***/ }),
 

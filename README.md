@@ -1,6 +1,6 @@
 # ABC News / Walt Disney Coding Challenge
 
-This project is a small coding challenge displaying the news for the day! I decided to use plain React with this application rather than redux or react-redux because of the simplicity of the state management. Because the endpoints on the NewsAPI give us similar information, I decided to instead take advantage of the top headlines endpoint and futher query that with different sources!
+This project is a small coding challenge displaying the news for the day! I decided to use plain React with this application rather than redux or react-redux because of the simplicity of state management. Because the endpoints on the NewsAPI give us similar information, I decided to instead take advantage of the top headlines endpoint and futher query that with different sources!
 
 ---
 
