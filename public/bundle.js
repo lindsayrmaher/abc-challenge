@@ -137,12 +137,12 @@ var App = function (_Component) {
         'div',
         { className: 'App' },
         _react2.default.createElement(
-          'div',
+          'h1',
           null,
-          'See the top headlines every day'
+          'Top Headlines from NewsAPI'
         ),
         _react2.default.createElement(
-          'div',
+          'p',
           null,
           ' Organize them by category, if you\'d like'
         ),

@@ -9,8 +9,8 @@ export default class App extends Component {
   render() {
     return (
       <div className="App">
-        <div>See the top headlines every day</div>
-        <div> Organize them by category, if you'd like</div>
+        <h1>Top Headlines from NewsAPI</h1>
+        <p> Organize them by category, if you'd like</p>
         <AllArticles />
       </div>
     );
