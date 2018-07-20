@@ -6,8 +6,8 @@ import SingleSource from './SingleSource';
 const Routes = () => {
   return (
     <Switch>
-      <Route path="/" component={AllArticles} />
-      <Route path="/source" component={SingleSource} />
+      <Route exact path="/" component={AllArticles} />
+      <Route path="/source/:source" component={SingleSource} />
     </Switch>
   )
 }

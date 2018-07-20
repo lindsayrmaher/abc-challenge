@@ -24,9 +24,14 @@ export default class Article extends Component {
     const articleInfo = this.props.articleInfo
     return (
       <div className="left-align article z-depth-1 hoverable">
-        <div onClick={this.handleClick}>
+        <div className="row">
+          <div className="col s6">
+            <h4>{newDate}</h4>
+          </div>
+          <div className="col s6 right-align">
+            <a className="infoLink" href="#"><p onClick={this.handleClick} >more info </p></a>
+          </div>
 
-          <h4>{newDate}</h4>
         </div>
         <a target="_blank" className="headlineURL" href={this.props.articleInfo.url}><h2>{this.props.articleInfo.title}</h2></a>
         <Link to={`/source/${articleSource.id}`}><h3>{this.props.articleInfo.source.name}</h3> </Link>
@@ -38,10 +43,10 @@ export default class Article extends Component {
 
 
 
-// link the source name to the page with only that particular source.
-// set the sourcemane selected as the url when searching
-// pass the selectedName down to this component
-// use that props to link to source page, display similar source articles
+    // link the source name to the page with only that particular source.
+    // set the sourcemane selected as the url when searching
+    // pass the selectedName down to this component
+    // use that props to link to source page, display similar source articles
 
 
 //generally, clean up unused components and stuff (ie router stuff)

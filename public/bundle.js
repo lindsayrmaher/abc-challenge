@@ -139,7 +139,7 @@ var App = function (_Component) {
         _react2.default.createElement(
           'h1',
           null,
-          'Top Headlines from NewsAPI'
+          'Top Headlines'
         ),
         _react2.default.createElement(
           'h4',
@@ -410,11 +410,28 @@ var Article = function (_Component) {
         { className: 'left-align article z-depth-1 hoverable' },
         _react2.default.createElement(
           'div',
-          { onClick: this.handleClick },
+          { className: 'row' },
           _react2.default.createElement(
-            'h4',
-            null,
-            newDate
+            'div',
+            { className: 'col s6' },
+            _react2.default.createElement(
+              'h4',
+              null,
+              newDate
+            )
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col s6 right-align' },
+            _react2.default.createElement(
+              'a',
+              { className: 'infoLink', href: '#' },
+              _react2.default.createElement(
+                'p',
+                { onClick: this.handleClick },
+                'more info '
+              )
+            )
           )
         ),
         _react2.default.createElement(
@@ -532,8 +549,8 @@ var Routes = function Routes() {
   return _react2.default.createElement(
     _reactRouterDom.Switch,
     null,
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/', component: _index.AllArticles }),
-    _react2.default.createElement(_reactRouterDom.Route, { path: '/source', component: _SingleSource2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _index.AllArticles }),
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/source/:source', component: _SingleSource2.default })
   );
 };
 
@@ -605,36 +622,37 @@ var SingleSource = function (_Component) {
     key: 'getArticlesBySource',
     value: function () {
       var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var allArticles, articles;
+        var source, allArticles, articles;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.prev = 0;
-                _context.next = 3;
-                return _axios2.default.get('/api/:source');
+                source = this.props.match.params.source;
+                _context.prev = 1;
+                _context.next = 4;
+                return _axios2.default.get('/api/' + source);
 
-              case 3:
+              case 4:
                 allArticles = _context.sent;
                 articles = allArticles.data.articles;
 
                 articles = this.sortArticles(articles);
                 this.setState({ articles: articles });
-                _context.next = 12;
+                _context.next = 13;
                 break;
 
-              case 9:
-                _context.prev = 9;
-                _context.t0 = _context['catch'](0);
+              case 10:
+                _context.prev = 10;
+                _context.t0 = _context['catch'](1);
 
                 console.error('error fetching articles', _context.t0);
 
-              case 12:
+              case 13:
               case 'end':
                 return _context.stop();
             }
           }
-        }, _callee, this, [[0, 9]]);
+        }, _callee, this, [[1, 10]]);
       }));
 
       function getArticlesBySource() {
@@ -660,10 +678,18 @@ var SingleSource = function (_Component) {
     key: 'render',
     value: function render() {
       var articles = this.state.articles;
-      console.log(articles);
       return _react2.default.createElement(
         'div',
         null,
+        _react2.default.createElement(
+          'div',
+          { className: 'left-align' },
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/' },
+            'back to home'
+          )
+        ),
         !articles || articles.length === 0 ? _react2.default.createElement(
           'div',
           null,

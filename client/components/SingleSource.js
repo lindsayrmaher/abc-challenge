@@ -17,8 +17,9 @@ export default class SingleSource extends Component {
   }
 
   async getArticlesBySource() {
+    const source = this.props.match.params.source
     try {
-      const allArticles = await axios.get('/api/:source')
+      const allArticles = await axios.get(`/api/${source}`)
       let articles = allArticles.data.articles
       articles = this.sortArticles(articles)
       this.setState({ articles })
@@ -43,9 +44,11 @@ export default class SingleSource extends Component {
 
   render() {
     const articles = this.state.articles
-    console.log(articles)
     return (
       <div>
+        <div className="left-align">
+          <Link to="/" >back to home</Link>
+        </div>
         {
           !articles || articles.length === 0 ?
             <div>No articles to load!</div> :
